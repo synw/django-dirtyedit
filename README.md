@@ -13,7 +13,7 @@ Install
 
 	pip install django-reversion
 	
-Add the setting `USE_REVERSION=True` to use django-reversion
+To disable django-reversion add the setting `USE_REVERSION = False`
 
 Add `'dirtyedit',` , `'reversion',`(option) and `'codemirror2',` to INSTALLED_APPS
 

@@ -8,7 +8,7 @@ from codemirror2.widgets import CodeMirrorEditor
 from dirtyedit.models import FileToEdit
 
 
-USE_REVERSION=getattr(settings, 'USE_REVERSION', False)
+USE_REVERSION=getattr(settings, 'USE_REVERSION', True)
 if USE_REVERSION:
     from reversion.admin import VersionAdmin
 
