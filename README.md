@@ -6,10 +6,10 @@ A Django application to edit files from the admin interface. This make it possib
 Install
 --------------
 
-	pip install codemirror2
+	pip install codemirror2 django-reversion
 	git clone https://github.com/synw/django-dirtyedit.git && cp -r django-dirtyedit/dirtyedit . && rm -rf django-dirtyedit
 
-Add `'dirtyedit',` and `'codemirror2',` to INSTALLED_APPS
+Add `'dirtyedit',` , `'reversion',` and `'codemirror2',` to INSTALLED_APPS
 
 Warning
 --------------

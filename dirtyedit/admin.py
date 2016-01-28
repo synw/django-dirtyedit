@@ -4,12 +4,13 @@ import os
 from django.conf import settings
 from django.contrib import admin
 from django.contrib import messages
+from reversion.admin import VersionAdmin
 from codemirror2.widgets import CodeMirrorEditor
 from dirtyedit.models import FileToEdit
 
 
 @admin.register(FileToEdit)
-class FileToEdit(admin.ModelAdmin):
+class FileToEdit(VersionAdmin):
     
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.attname == "content":
