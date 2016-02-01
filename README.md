@@ -31,5 +31,5 @@ Handle with care: its pretty easy to break things with this module! Only give ac
 Todo
 --------------
 
-- Limit file edition to `media` and `static` by default
+- Limit file edition to `templates`, `media` and `static` with maybe an option for extra dirs
 - Read the file content on creation and populate initial data into the instance
