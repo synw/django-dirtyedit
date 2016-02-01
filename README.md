@@ -23,3 +23,8 @@ Warning
 :warning: When you first time create a file you have to populate its initial content in the admin interface, the application is not going to read the file from the filesystem
 
 Handle with care: its pretty easy to break things with this module! Only give access to it to trusted admin users.
+
+Todo
+--------------
+
+- Limit file edition to `media` and `static` by default
