@@ -9,13 +9,17 @@ Install
 	pip install codemirror2
 	git clone https://github.com/synw/django-dirtyedit.git && cp -r django-dirtyedit/dirtyedit . && rm -rf django-dirtyedit
 
-- Option: django-reversion:
+Option: django-reversion:
 
 	pip install django-reversion
-	
+
 To disable django-reversion add the setting `USE_REVERSION = False`
 
-Add `'dirtyedit',` , `'reversion',`(option) and `'codemirror2',` to INSTALLED_APPS
+Add these to INSTALLED_APPS:
+
+	'codemirror2',
+	'dirtyedit',
+	'reversion', #optional
 
 Warning
 --------------
