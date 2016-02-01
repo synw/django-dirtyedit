@@ -28,3 +28,4 @@ Todo
 --------------
 
 - Limit file edition to `media` and `static` by default
+- Read the file content on creation and populate initial data into the instance
