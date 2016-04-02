@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os
 from django.conf import settings
 from django.db import models
-from django.contrib import messages
+from mqueue.tracking import MTracker
 
 
 class FileToEdit(models.Model):
@@ -19,6 +18,9 @@ class FileToEdit(models.Model):
         
     def __unicode__(self):
         return str(self.location)
+    
+  
+MTracker().register(FileToEdit, 2)
     
 
         
