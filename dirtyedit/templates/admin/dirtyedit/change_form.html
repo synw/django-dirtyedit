@@ -5,8 +5,7 @@
 {% url 'admin:jsi18n' as jsi18nurl %}
 <script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
 <script type="text/javascript">
-$(".alert-message").alert();
-window.setTimeout(function() { $(".alert").alert('close'); }, 2000);
+window.setTimeout(function() { $(".alert-success").fadeOut('slow'); }, 1500);
 </script>
 {{ media }}
 {% endblock %}

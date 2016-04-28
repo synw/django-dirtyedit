@@ -2,28 +2,29 @@
 
 import os
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 from django.contrib import messages
 from codemirror2.widgets import CodeMirrorEditor
 from dirtyedit.models import FileToEdit
+from dirtyedit.forms import DirtyEditForm
+from dirtyedit.utils import read_file
+from dirtyedit.conf import USE_REVERSION
 
 
-USE_REVERSION=getattr(settings, 'USE_REVERSION', True)
-if USE_REVERSION:
-    from reversion.admin import VersionAdmin
-    
 admin_class=admin.ModelAdmin
 if USE_REVERSION:
     admin_class=VersionAdmin
 @admin.register(FileToEdit)
 class FileToEditAdmin(admin_class):
+    form = DirtyEditForm
     save_on_top = True
     fieldsets = (
             (None, {
                 'fields': ('content',)
             }),
             (None, {
-                'fields': ('file_type', 'location')
+                'fields': ('file_type', 'relative_path')
             }),
             )
     
@@ -35,10 +36,10 @@ class FileToEditAdmin(admin_class):
         file_content = obj.content
         something_wrong = False
         try:
-            filepath=settings.BASE_DIR+obj.location
+            filepath=settings.BASE_DIR+obj.relative_path
             #~ check if the file exists
             if not os.path.isfile(filepath):
-                messages.error(request, "File "+obj.location+" not found - nothing saved on disk")
+                messages.error(request, "File "+obj.relative_path+" not found - nothing saved on disk")
                 something_wrong = True
             else:
                 #~ write the file
@@ -50,29 +51,16 @@ class FileToEditAdmin(admin_class):
             something_wrong = True
         if not something_wrong:
             obj.save()  
-            
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        obj_id = kwargs['request'].META['PATH_INFO'].strip('/').split('/')[-1]
-        obj = FileToEdit.objects.get(pk=int(obj_id))
-        print str(obj)
-        if db_field.attname == "content":
-            kwargs['widget'] = CodeMirrorEditor(options={
-                                                         'mode':'htmlmixed',
-                                                         'indentWithTabs':'true', 
-                                                         'indentUnit' : '4',
-                                                         'lineNumbers':'true',
-                                                         'autofocus':'true',
-                                                         #'highlightSelectionMatches': '{showToken: /\w/, annotateScrollbar: true}',
-                                                         'styleActiveLine': 'true',
-                                                         'autoCloseTags': 'true',
-                                                         'keyMap':'vim',
-                                                         'theme':'blackboard',
-                                                         }, 
-                                                         modes=['css', 'xml', 'javascript', 'htmlmixed'],
-                                                         )
-            kwargs['label'] = 'File content'
-        return super(FileToEditAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 
+    def get_changeform_initial_data(self, request):
+        if 'fpath' in request.GET.keys():
+            try:
+                filepath = request.GET.get('fpath')
+                filecontent = read_file(request, filepath)
+                return {'content': filecontent, 'relative_path':filepath}
+            except:
+                pass
+        return
 
 
 

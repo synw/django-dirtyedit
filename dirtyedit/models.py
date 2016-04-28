@@ -9,7 +9,7 @@ class FileToEdit(models.Model):
     edited = models.DateTimeField(editable=False, auto_now=True, verbose_name=_(u'Edited'))
     created = models.DateTimeField(editable=False, auto_now_add=True)
     editor = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False, related_name='+', null=True, on_delete=models.SET_NULL, verbose_name=u'Edited by')   
-    location = models.CharField(max_length=255, null=True, unique=True, verbose_name=_(u"File path"))
+    relative_path = models.CharField(max_length=255, null=True, unique=True, verbose_name=_(u"File path"))
     file_type = models.CharField(max_length=60, blank=True, help_text=_(u'See here for a list: http://codemirror.net/mode/'))
     content = models.TextField(null=True, blank=True)
     
@@ -19,7 +19,7 @@ class FileToEdit(models.Model):
         verbose_name_plural = _(u'Files to edit')
         
     def __unicode__(self):
-        return str(self.location)
+        return str(self.relative_path)
     
 
     
