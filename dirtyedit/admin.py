@@ -20,7 +20,10 @@ class FileToEditAdmin(admin_class):
     save_on_top = True
     fieldsets = (
             (None, {
-                'fields': ('content', 'location')
+                'fields': ('content',)
+            }),
+            (None, {
+                'fields': ('file_type', 'location')
             }),
             )
     
