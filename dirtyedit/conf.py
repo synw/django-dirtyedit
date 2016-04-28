@@ -3,12 +3,15 @@
 from django.conf import settings
 
 
-EDIT_MODES = (
-              'html',
-              'code',
-              )
+edit_modes = ('html','code')
 
-EDIT_MODE = getattr(settings, 'DIRTYEDIT_EDIT_MODE', EDIT_MODES[1])
+authorized_paths = ('/media/files', '/static', '/templates')
+
+EDIT_MODE = getattr(settings, 'DIRTYEDIT_EDIT_MODE', edit_modes[1])
 CODEMIRROR_KEYMAP = getattr(settings, 'DIRTYEDIT_CODEMIRROR_KEYMAP', 'default')
 
-USE_REVERSION=getattr(settings, 'DIRTYEDIT_USE_REVERSION', False)
+USE_REVERSION = getattr(settings, 'DIRTYEDIT_USE_REVERSION', False)
+
+AUTHORIZED_PATHS = getattr(settings, 'DIRTYEDIT_AUTHORIZED_PATHS', authorized_paths)
+
+CAN_CREATE_FILES = getattr(settings, 'DIRTYEDIT_CAN_CREATE_FILES', False)

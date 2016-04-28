@@ -24,7 +24,7 @@ class FileToEditAdmin(admin_class):
                 'fields': ('content',)
             }),
             (None, {
-                'fields': ('file_type', 'relative_path')
+                'fields': ('relative_path',)
             }),
             )
     
@@ -51,15 +51,23 @@ class FileToEditAdmin(admin_class):
             something_wrong = True
         if not something_wrong:
             obj.save()  
-
+    
     def get_changeform_initial_data(self, request):
         if 'fpath' in request.GET.keys():
-            try:
-                filepath = request.GET.get('fpath')
-                filecontent = read_file(request, filepath)
+            filepath = request.GET.get('fpath')
+            status_msg, msg, filecontent = read_file(request, filepath)
+            if status_msg is True:
+                messages.success(request, msg)
                 return {'content': filecontent, 'relative_path':filepath}
-            except:
-                pass
+            else:
+                if status_msg == 'warn':
+                    messages.warning(request, msg)
+                    return
+                elif status_msg == 'infos':
+                    messages.info(request, msg)
+                    return
+                messages.error(request, msg)
+                return
         return
 
 

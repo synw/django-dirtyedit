@@ -5,10 +5,25 @@
 {% url 'admin:jsi18n' as jsi18nurl %}
 <script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
 <script type="text/javascript">
-window.setTimeout(function() { $(".alert-success").fadeOut('slow'); }, 1500);
+window.setTimeout(function() { $(".alert-success").fadeOut('slow'); }, 2000);
+window.setTimeout(function() { $(".alert-info").fadeOut('slow'); }, 4000);
 </script>
 {{ media }}
 {% endblock %}
+
+{% block messages %}
+	{% if messages %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% for message in messages %}
+                <div class="alert {{ message.tags|default:"alert-info" }}">
+                    {{ message|capfirst|safe }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock messages %}
 
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />{% endblock %}
 

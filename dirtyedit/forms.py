@@ -40,6 +40,7 @@ class DirtyEditForm(forms.ModelForm):
                                   )
     else:
         content = forms.CharField(widget=forms.Textarea)
+    content.required = False
 
     
     class Meta:
