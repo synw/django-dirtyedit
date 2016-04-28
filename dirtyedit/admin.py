@@ -14,6 +14,7 @@ from dirtyedit.conf import USE_REVERSION
 
 admin_class=admin.ModelAdmin
 if USE_REVERSION:
+    from reversion.admin import VersionAdmin
     admin_class=VersionAdmin
 @admin.register(FileToEdit)
 class FileToEditAdmin(admin_class):

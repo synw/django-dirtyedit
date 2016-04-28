@@ -78,7 +78,7 @@ def check_file(relative_path):
         else:
             msg = filepath_form+_(u"<div class=\"dirtymsg\">File '<strong>%s</strong>' not found</div>") % (relative_path,)
             return (False, msg)
-    return
+    return (True, '')
 
 def read_file(relative_path):
     status, msg = check_file(relative_path)
