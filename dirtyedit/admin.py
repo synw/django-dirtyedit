@@ -55,7 +55,7 @@ class FileToEditAdmin(admin_class):
     def get_changeform_initial_data(self, request):
         if 'fpath' in request.GET.keys():
             filepath = request.GET.get('fpath')
-            status_msg, msg, filecontent = read_file(request, filepath)
+            status_msg, msg, filecontent = read_file(filepath)
             if status_msg is True:
                 messages.success(request, msg)
                 return {'content': filecontent, 'relative_path':filepath}
@@ -65,7 +65,7 @@ class FileToEditAdmin(admin_class):
                     return
                 elif status_msg == 'infos':
                     messages.info(request, msg)
-                    return
+                    return {'relative_path':filepath}
                 messages.error(request, msg)
                 return
         return
