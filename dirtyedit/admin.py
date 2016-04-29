@@ -8,7 +8,7 @@ from django.contrib import messages
 from codemirror2.widgets import CodeMirrorEditor
 from dirtyedit.models import FileToEdit
 from dirtyedit.forms import DirtyEditForm
-from dirtyedit.utils import read_file
+from dirtyedit.utils import read_file, write_file
 from dirtyedit.conf import USE_REVERSION
 
 
@@ -33,25 +33,15 @@ class FileToEditAdmin(admin_class):
         #~ record editor
         if getattr(obj, 'editor', None) is None:
             obj.editor = request.user
-        #~ save file
-        file_content = obj.content
-        something_wrong = False
-        try:
-            filepath=settings.BASE_DIR+obj.relative_path
-            #~ check if the file exists
-            if not os.path.isfile(filepath):
-                messages.error(request, "File "+obj.relative_path+" not found - nothing saved on disk")
-                something_wrong = True
+        status, msg = write_file(obj.relative_path, obj.content)
+        if msg <> '':
+            if status == 'warn':
+                messages.warning(request, msg)
+            elif status == 'infos':
+                messages.info(request, msg)
             else:
-                #~ write the file
-                filex = open(filepath, "w")
-                filex.write(file_content)
-                filex.close()
-        except Exception, e:
-            messages.error(request, str(e))
-            something_wrong = True
-        if not something_wrong:
-            obj.save()  
+                messages.error(request, msg)
+        return super(FileToEditAdmin, self).save_model(request, obj, form, change)
     
     def get_changeform_initial_data(self, request):
         if 'fpath' in request.GET.keys():

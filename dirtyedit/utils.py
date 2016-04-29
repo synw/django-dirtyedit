@@ -23,7 +23,7 @@ filepath_form = """
 </form>
 """
 
-def check_file(relative_path):
+def check_file(relative_path, edit_mode=False):
     # check if the directory is authorized
     if relative_path == '':
         msg = filepath_form+_(u"<div class=\"dirtymsg\">Please provide a file path</div>")
@@ -73,10 +73,14 @@ def check_file(relative_path):
             return (False, msg)
         # msgs
         if CAN_CREATE_FILES is True:
-            msg = _(u"<div class=\"dirtymsg\">A new file will be created at '<strong>%s</strong>'</div>") % (relative_path,)
-            return ('infos', msg)
+            if not edit_mode is True:
+                msg = _(u"<div class=\"dirtymsg\">A new file will be created at '<strong>%s</strong>'</div>") % (relative_path,)
+                return ('infos', msg)
         else:
-            msg = filepath_form+_(u"<div class=\"dirtymsg\">File '<strong>%s</strong>' not found</div>") % (relative_path,)
+            if not edit_mode is True:
+                msg = filepath_form+_(u"<div class=\"dirtymsg\">File '<strong>%s</strong>' not found</div>") % (relative_path,)
+            else:
+                msg = filepath_form+_(u"<div class=\"dirtymsg\">You can not create files</div>")
             return (False, msg)
     return (True, '')
 
@@ -91,4 +95,15 @@ def read_file(relative_path):
     msg = _(u"File found: data populated")
     return (True, msg, filecontent)
 
+def write_file(relative_path, content):
+    status, msg = check_file(relative_path, edit_mode=True)
+    if status in [False, 'warn', 'infos']:
+        return (status, msg)
+    else:
+        filepath=settings.BASE_DIR+relative_path
+        #~ write the file
+        filex = open(filepath, "w")
+        filex.write(content)
+        filex.close()
+    return (True, msg)
 

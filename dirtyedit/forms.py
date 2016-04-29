@@ -17,7 +17,7 @@ class DirtyEditForm(forms.ModelForm):
         if 'django_admin_bootstrapped' in settings.INSTALLED_APPS:
             self.fields['content'].label = 'no label'
     
-    if EDIT_MODE == 'html':    
+    if EDIT_MODE == 'html':
         content = forms.CharField(widget=CKEditorUploadingWidget())
     elif EDIT_MODE == 'code':
         content = forms.CharField(
