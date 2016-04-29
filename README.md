@@ -30,7 +30,7 @@ Default values are:
 - `EDIT_MODE = 'code'` : uses codemirror. To use ckeditor set it to `'html'`   
 - `CODEMIRROR_KEYMAP = 'default'` : set it to what your like. Ex: `'vim'`, `'emacs'`
 - `AUTHORIZED_PATHS = ('/media', '/static', '/templates')` : writing in theses directories and their subdirectories is authorized.
-- `EXCLUDED_PATHS = ()` : to explicitly exclude some paths. Ex: `('media/private')`
+- `EXCLUDED_PATHS = ()` : to explicitly exclude some paths. Ex: `('/media/private')`
 - `CAN_CREATE_FILES = False` : set it to `True` to allow file creation
 - `USE_REVERSION = False` : set it to True to use reversion
 
@@ -42,4 +42,4 @@ Handle with care: its pretty easy to break things with this module! Only give ac
 Todo
 --------------
 
-- Handle file types for highlighting in codemirror
+- Handle file types to auto setup codemirror highlighting mode
