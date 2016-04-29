@@ -4,10 +4,11 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from codemirror2.widgets import CodeMirrorEditor
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from dirtyedit.models import FileToEdit
 from dirtyedit.conf import CODEMIRROR_KEYMAP, EDIT_MODE
 
+if EDIT_MODE == 'html':
+    from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 class DirtyEditForm(forms.ModelForm):

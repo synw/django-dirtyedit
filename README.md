@@ -20,6 +20,7 @@ Add these to INSTALLED_APPS:
 
 	'codemirror2',
 	'dirtyedit',
+	'ckeditor', #optional
 	'reversion', #optional
 
 Settings
