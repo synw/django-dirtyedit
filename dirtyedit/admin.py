@@ -19,7 +19,6 @@ if USE_REVERSION:
 @admin.register(FileToEdit)
 class FileToEditAdmin(admin_class):
     form = DirtyEditForm
-    save_on_top = True
     fieldsets = (
             (None, {
                 'fields': ('content',)
