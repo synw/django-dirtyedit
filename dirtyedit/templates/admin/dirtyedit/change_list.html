@@ -51,12 +51,21 @@
               </a>
             </li>
 			{% endcomment %}
-            <li style="padding-bottom:0.5em">
-	        	<form method="get" action="/admin/dirtyedit/filetoedit/add/">			  
-				  	<input class="form-control" id="fpath" name="fpath" placeholder="{% trans 'File path' %}" type="search">
-					<button type="submit">{% trans 'Ajouter un fichier' %}</button>
-				</form>
-	        </li>
+			{% if cl.opts.app_label == 'dirtyedit' %}
+	            <li style="padding-bottom:0.5em">
+		        	<form method="get" action="/admin/dirtyedit/filetoedit/add/">			  
+					  	<input class="form-control" id="fpath" name="fpath" placeholder="{% trans 'File path' %}" type="search">
+						<button type="submit">{% trans 'Ajouter un fichier' %}</button>
+					</form>
+		        </li>
+		    {% else %}
+			    <li>
+	              {% url cl.opts|admin_urlname:'add' as add_url %}
+	              <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink">
+	                {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
+	              </a>
+	            </li>
+		    {% endif %}
             {% endif %}
           {% endblock %}
         </ul>

@@ -1,2 +1,2 @@
-recursive-include mqueue/templates *
-recursive-include mqueue/migrations *
+recursive-include dirtyedit/migrations *
+recursive-include dirtyedit/templates *
