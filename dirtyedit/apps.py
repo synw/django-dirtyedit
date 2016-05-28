@@ -7,6 +7,6 @@ class DirtyEditConfig(AppConfig):
     verbose_name = _(u"Files editor")
     
     def ready(self):
-        from mqueue import signals
+        pass
         
         
