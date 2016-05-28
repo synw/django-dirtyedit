@@ -1,6 +1,8 @@
 Django Dirty Edit
 ==============
 
+[![Build Status](https://travis-ci.org/synw/django-dirtyedit.svg?branch=master)](https://travis-ci.org/synw/django-dirtyedit)
+
 A Django application to edit files from the admin interface. This make it possible for example to let graphic 
 designers edit some css files in the admin interface. 
 
