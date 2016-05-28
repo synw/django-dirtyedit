@@ -1,0 +1,2 @@
+recursive-include mqueue/templates *
+recursive-include mqueue/migrations *
