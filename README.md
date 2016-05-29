@@ -20,10 +20,12 @@ To enable django-reversion add the setting `USE_REVERSION = True`
 
 Add these to INSTALLED_APPS:
 
-	'codemirror2',
 	'dirtyedit',
 	'ckeditor', #optional
+	'codemirror2',
 	'reversion', #optional
+
+Note: `codemirror2` should be loaded after `dirtyedit`
 
 Settings
 --------------

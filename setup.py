@@ -8,7 +8,7 @@ setup(
   packages=find_packages(),
   include_package_data=True,
   version = version,
-  description = 'File editor for Django',
+  description = ' Django application to edit files from the admin interface',
   author = 'synw',
   author_email = 'synwe@yahoo.com',
   url = 'https://github.com/synw/django-dirtyedit', 
