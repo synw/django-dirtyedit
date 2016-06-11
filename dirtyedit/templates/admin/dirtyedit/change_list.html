@@ -51,6 +51,7 @@
               </a>
             </li>
 			{% endcomment %}
+			{# dirty trick to print the form in change page #}
 			{% if cl.opts.app_label == 'dirtyedit' %}
 	            <li style="padding-bottom:0.5em">
 		        	<form method="get" action="/admin/dirtyedit/filetoedit/add/">			  

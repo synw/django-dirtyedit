@@ -1,27 +1,11 @@
-{% extends "admin/change_list.html" %}
+{% extends "admin/dirtyedit/change_list.html" %}
+{# dirty trick to print out the add file form: check dirtyedit/change_list.html #}
 {% load i18n admin_urls %}
 
 
 {% block object-tools-items %}
-	{% if not is_popup and has_add_permission and has_change_permission %}
+    {% if not is_popup and has_add_permission and has_change_permission %}
         <li><a href="{% url opts|admin_urlname:'recoverlist' %}" class="recoverlink">{% blocktrans with cl.opts.verbose_name_plural|escape as name %}Recover deleted {{name}}{% endblocktrans %}</a></li>
     {% endif %}
-	{% if cl.opts.app_label == 'dirtyedit' %}
-	    <li>
-        	<form class="form-inline" method="get" action="/admin/dirtyedit/filetoedit/add/">			
-				<div class="form-group">
-				    <div class="input-group">	  
-					  	<input class="form-control" style="top:8px;" id="fpath" name="fpath" placeholder="{% trans 'File path' %}" type="search">
-						<span class="input-group-btn">
-							<button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i>&nbsp;{% trans 'Ajouter un fichier' %}</button>
-						</span>
-					</div>
-			    </div>
-			</form>
-        </li>
-   	{% else %}
-		<li>
-        {% url cl.opts|admin_urlname:'add' as add_url %}
-        {{block.super}}
-    {% endif %}
- {% endblock %}
+    {{block.super}}
+{% endblock %}
