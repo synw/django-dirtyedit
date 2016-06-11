@@ -25,7 +25,7 @@ Add these to INSTALLED_APPS:
 	'codemirror2',
 	'reversion', #optional
 
-Note: `codemirror2` should be loaded after `dirtyedit`
+Note: `codemirror2` and `reversion` should be loaded after `dirtyedit`
 
 Settings
 --------------
