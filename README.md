@@ -32,12 +32,12 @@ Settings
 
 Default values are:
 
-- `EDIT_MODE = 'code'` : uses codemirror. To use ckeditor set it to `'html'`   
-- `CODEMIRROR_KEYMAP = 'default'` : set it to what your like. Ex: `'vim'`, `'emacs'`
-- `AUTHORIZED_PATHS = ('/media', '/static', '/templates')` : writing in theses directories and their subdirectories is authorized.
-- `EXCLUDED_PATHS = ()` : to explicitly exclude some paths. Ex: `('/media/private')`
-- `CAN_CREATE_FILES = False` : set it to `True` to allow file creation
-- `USE_REVERSION = False` : set it to True to use reversion
+- `DIRTYEDIT_EDIT_MODE = 'code'` : uses codemirror. To use ckeditor set it to `'html'`   
+- `DIRTYEDIT_CODEMIRROR_KEYMAP = 'default'` : set it to what your like. Ex: `'vim'`, `'emacs'`
+- `DIRTYEDIT_AUTHORIZED_PATHS = ('/media', '/static', '/templates')` : writing in theses directories and their subdirectories is authorized.
+- `DIRTYEDIT_EXCLUDED_PATHS = ()` : to explicitly exclude some paths. Ex: `('/media/private')`
+- `DIRTYEDIT_CAN_CREATE_FILES = False` : set it to `True` to allow file creation
+- `DIRTYEDIT_USE_REVERSION = False` : set it to True to use reversion
 
 Warning
 --------------
