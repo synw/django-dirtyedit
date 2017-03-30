@@ -9,21 +9,15 @@ designers edit some css files in the admin interface.
 Install
 --------------
 
-	pip install codemirror2
+	pip install codemirror2 django-ckeditor django-reversion 
 	git clone https://github.com/synw/django-dirtyedit.git && cp -r django-dirtyedit/dirtyedit . && rm -rf django-dirtyedit
-
-Option: django-reversion:
-
-	pip install django-reversion
-
-To enable django-reversion add the setting `USE_REVERSION = True`
 
 Add these to INSTALLED_APPS:
 
 	'dirtyedit',
-	'ckeditor', #optional
+	'ckeditor',
 	'codemirror2',
-	'reversion', #optional
+	'reversion',
 
 Note: `codemirror2` and `reversion` should be loaded after `dirtyedit`
 
@@ -37,7 +31,7 @@ Default values are:
 - `DIRTYEDIT_AUTHORIZED_PATHS = ('/media', '/static', '/templates')` : writing in theses directories and their subdirectories is authorized.
 - `DIRTYEDIT_EXCLUDED_PATHS = ()` : to explicitly exclude some paths. Ex: `('/media/private')`
 - `DIRTYEDIT_CAN_CREATE_FILES = False` : set it to `True` to allow file creation
-- `DIRTYEDIT_USE_REVERSION = False` : set it to True to use reversion
+- `DIRTYEDIT_USE_REVERSION = True` : set it to False to disable reversion
 
 Warning
 --------------
