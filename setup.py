@@ -22,7 +22,10 @@ setup(
         'Programming Language :: Python :: 2.7',
     ],
   install_requires=[
-        "Django",
+        'dirtyedit',
+        'ckeditor',
+        'codemirror2',
+        'reversion'
     ],
   zip_safe=False
 )
