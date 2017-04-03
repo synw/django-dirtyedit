@@ -9,8 +9,7 @@ designers edit some css files in the admin interface.
 Install
 --------------
 
-	pip install codemirror2 django-ckeditor django-reversion 
-	git clone https://github.com/synw/django-dirtyedit.git && cp -r django-dirtyedit/dirtyedit . && rm -rf django-dirtyedit
+	pip install django-dirtyedit
 
 Add these to INSTALLED_APPS:
 
