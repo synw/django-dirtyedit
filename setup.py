@@ -22,9 +22,9 @@ setup(
         'Programming Language :: Python :: 2.7',
     ],
   install_requires=[
-        'ckeditor',
-        'codemirror2',
-        'reversion'
+        'django-ckeditor',
+        'django-codemirror2',
+        'django-reversion'
     ],
   zip_safe=False
 )
