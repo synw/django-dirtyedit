@@ -37,6 +37,17 @@ Warning
 
 Handle with care: its pretty easy to break things with this module! Only give access to it to trusted admin users.
 
+Screenshots
+--------------
+
+Select files:
+
+![Dirty edit screenshot](https://raw.github.com/synw/django-dirtyedit/master/docs/img/screenshot1.png)
+
+Edit files (fullscreen edit is available):
+
+![Dirty edit screenshot](https://raw.github.com/synw/django-dirtyedit/master/docs/img/screenshot2.png)
+
 Todo
 --------------
 
