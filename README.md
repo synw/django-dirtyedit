@@ -32,6 +32,18 @@ Default values are:
 - `DIRTYEDIT_CAN_CREATE_FILES = False` : set it to `True` to allow file creation
 - `DIRTYEDIT_USE_REVERSION = True` : set it to False to disable reversion
 
+Management command
+------------------
+
+A management command is available to populate the database from a directory: example:
+
+   ```
+   python3 manage.py populate_editor templates
+   ```
+   
+This will save instances from each of the files that is in the `templates` folder. Note: this is not recursive, only
+the files in the directory will be processed
+
 Warning
 --------------
 
