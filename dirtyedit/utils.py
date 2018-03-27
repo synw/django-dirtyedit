@@ -12,9 +12,9 @@ filepath_form = """
     line-height:2.3em;
 }
 </style>
-<form class="form-inline pull-left" method="get" action="/admin/dirtyedit/filetoedit/add/" style="margin-right:1em;top:-0.3em">            
+<form class="form-inline pull-left" method="get" action="/admin/dirtyedit/filetoedit/add/" style="margin-right:1em;top:-0.3em">
     <div class="form-group">
-        <div class="input-group">      
+        <div class="input-group">
               <input class="form-control" id="fpath" name="fpath" placeholder="File path" type="search">
             <span class="input-group-btn">
                 <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i>&nbsp;Add file</button>
@@ -26,76 +26,86 @@ filepath_form = """
 
 
 def check_file(relative_path, edit_mode=False):
-    # check if the directory is authorized
+    """
+    Checks the if the file is editable
+    """
+    ok, msg = check_path(relative_path, edit_mode)
+    if ok is False:
+        return False, msg
+    return True, ''
+
+
+def check_path(relative_path, edit_mode=False):
+    """
+    Does some security checks on filepath
+    """
+    # check for empty path
     if relative_path == '':
         msg = filepath_form + \
             _(u"<div class=\"dirtymsg\">Please provide a file path</div>")
-        return ('warn', msg)
+        return False, msg
+    # check for root path
     if relative_path == '/':
         msg = filepath_form + _(u'<div class="dirtymsg">What?</div>')
-        return (False, msg)
+        return False, msg
+    # check for filename
     if relative_path.endswith('/'):
         msg = filepath_form + \
-            _(u"<div class=\"dirtymsg\">Path '<strong>%s</strong>' is invalid: please provide a filename</div>") % (relative_path,)
-        return (False, msg)
-    if not relative_path.startswith('/'):
-        msg = filepath_form + \
-            _(u'<div class="dirtymsg">Path <strong>\'%s\'</strong> is invalid: please start it with a /</div>') % (relative_path,)
-        return (False, msg)
-    pathlist = relative_path.split('/')[1:]
-    folderpath = '/' + '/'.join(pathlist[:len(pathlist) - 1])
-    absolute_folderpath = safe_join(settings.BASE_DIR, folderpath)
-    if len(pathlist) > 1:
-        filename = pathlist[len(pathlist) - 1]
-    else:
-        if '.' not in pathlist[0]:
-            msg = filepath_form + \
-                _(u"<div class=\"dirtymsg\">Path '<strong>%s</strong>' is invalid: please provide a filename</div>") % (relative_path,)
-            return (False, msg)
+            _(u"<div class=\"dirtymsg\">Path '<strong>%s</strong>' is invalid: "
+              "please provide a filename</div>") % (relative_path,)
+        return False, msg
+    pathlist = relative_path.split('/')
+    folderpath = '/'.join(pathlist[:len(pathlist) - 1])
+    # check for excluded paths
     for fpath in EXCLUDED_PATHS:
         if relative_path.startswith(fpath):
             msg = filepath_form + \
-                _(u"<div class=\"dirtymsg\">You can not edit files in the directory '<strong>%s</strong>'</div>") % (folderpath,)
+                _(u"<div class=\"dirtymsg\">You can not edit files in the directory "
+                  "'<strong>%s</strong>'</div>") % (folderpath,)
             return (False, msg)
-    if not os.path.isdir(absolute_folderpath):
-        msg = filepath_form + \
-            _(u"<div class=\"dirtymsg\">The directory <strong>%s</strong>' does not exist</div>") % (folderpath,)
-        return (False, msg)
     # check vs authorized paths
     is_authorized = False
     for authorized_path in AUTHORIZED_PATHS:
         #~ check if the path is part of the authorized path
+        print(folderpath)
+        print(authorized_path)
         if folderpath.startswith(authorized_path):
             # '+folderpath
             is_authorized = True
             break
     if is_authorized is False:
         msg = filepath_form + \
-            _(u"<div class=\"dirtymsg\">You can not edit files in the directory '<strong>%s</strong>'</div>") % (folderpath,)
+            _(u"<div class=\"dirtymsg\">You can not edit files in the directory "
+              "'<strong>%s</strong>'</div>") % (folderpath,)
         return (False, msg)
-    filepath = settings.BASE_DIR + relative_path
+    # verify that the directory exists and is under project root
+    absolute_folderpath = safe_join(settings.BASE_DIR, folderpath)
+    if not os.path.isdir(absolute_folderpath):
+        msg = filepath_form + \
+            _(u"<div class=\"dirtymsg\">The directory <strong>%s</strong>'"
+              " does not exist</div>") % (folderpath,)
+        return (False, msg)
     # check if file exists
+    filepath = safe_join(settings.BASE_DIR, relative_path)
     if not os.path.isfile(filepath):
-        # check if filename has an extension
-        if not '.' in filename:
-            msg = filepath_form + \
-                _(u"<div class=\"dirtymsg\">Invalid filename '<strong>%s</strong>': please provide an extention (ex '%s.html')</div>") % (filename, filename)
-            return (False, msg)
         # msgs
         if CAN_CREATE_FILES is True:
             if not edit_mode is True:
                 msg = _(
-                    u"<div class=\"dirtymsg\">A new file will be created at '<strong>%s</strong>'</div>") % (relative_path,)
+                    u"<div class=\"dirtymsg\">A new file will be created at "
+                    "'<strong>%s</strong>'</div>") % (relative_path,)
                 return ('infos', msg)
         else:
             if not edit_mode is True:
                 msg = filepath_form + \
-                    _(u"<div class=\"dirtymsg\">File '<strong>%s</strong>' not found</div>") % (relative_path,)
+                    _(u"<div class=\"dirtymsg\">File '<strong>%s</strong>' "
+                      "not found</div>") % (relative_path,)
             else:
                 msg = filepath_form + \
                     _(u"<div class=\"dirtymsg\">You can not create files</div>")
             return (False, msg)
-    return (True, '')
+    # ok
+    return True, ''
 
 
 def read_file(relative_path):

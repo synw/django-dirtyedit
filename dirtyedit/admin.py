@@ -38,7 +38,8 @@ class FileToEditAdmin(admin_class):
                 messages.info(request, msg)
             else:
                 messages.error(request, msg)
-        return super(FileToEditAdmin, self).save_model(request, obj, form, change)
+        return super(FileToEditAdmin, self).save_model(
+            request, obj, form, change)
 
     def get_changeform_initial_data(self, request):
         if 'fpath' in request.GET.keys():
