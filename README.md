@@ -27,8 +27,8 @@ Default values are:
 
 - `DIRTYEDIT_EDIT_MODE = 'code'` : uses codemirror. To use ckeditor set it to `'html'`   
 - `DIRTYEDIT_CODEMIRROR_KEYMAP = 'default'` : set it to what your like. Ex: `'vim'`, `'emacs'`
-- `DIRTYEDIT_AUTHORIZED_PATHS = ('/media', '/static', '/templates')` : writing in theses directories and their subdirectories is authorized.
-- `DIRTYEDIT_EXCLUDED_PATHS = ()` : to explicitly exclude some paths. Ex: `('/media/private')`
+- `DIRTYEDIT_AUTHORIZED_PATHS = ('media', 'static', 'templates')` : writing in theses directories and their subdirectories is authorized.
+- `DIRTYEDIT_EXCLUDED_PATHS = ()` : to explicitly exclude some paths. Ex: `('media/private')`
 - `DIRTYEDIT_CAN_CREATE_FILES = False` : set it to `True` to allow file creation
 - `DIRTYEDIT_USE_REVERSION = True` : set it to False to disable reversion
 
