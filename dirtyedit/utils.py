@@ -25,17 +25,17 @@ filepath_form = """
 """
 
 
-def check_file(relative_path, edit_mode=False):
+def check_file(relative_path, edit_mode=False, dir_only=False):
     """
     Checks the if the file is editable
     """
-    ok, msg = check_path(relative_path, edit_mode)
+    ok, msg = check_path(relative_path, edit_mode, dir_only)
     if ok is False:
         return False, msg
     return True, ''
 
 
-def check_path(relative_path, edit_mode=False):
+def check_path(relative_path, edit_mode=False, dir_only=False):
     """
     Does some security checks on filepath
     """
@@ -49,7 +49,8 @@ def check_path(relative_path, edit_mode=False):
         msg = filepath_form + _(u'<div class="dirtymsg">What?</div>')
         return False, msg
     # check for filename
-    if relative_path.endswith('/'):
+    if relative_path.endswith('/') and dir_only is False:
+        print("jjjjjjjjjjj", dir_only)
         msg = filepath_form + \
             _(u"<div class=\"dirtymsg\">Path '<strong>%s</strong>' is invalid: "
               "please provide a filename</div>") % (relative_path,)
@@ -67,8 +68,6 @@ def check_path(relative_path, edit_mode=False):
     is_authorized = False
     for authorized_path in AUTHORIZED_PATHS:
         #~ check if the path is part of the authorized path
-        print(folderpath)
-        print(authorized_path)
         if folderpath.startswith(authorized_path):
             # '+folderpath
             is_authorized = True
@@ -86,37 +85,38 @@ def check_path(relative_path, edit_mode=False):
               " does not exist</div>") % (folderpath,)
         return (False, msg)
     # check if file exists
-    filepath = safe_join(settings.BASE_DIR, relative_path)
-    if not os.path.isfile(filepath):
-        # msgs
-        if CAN_CREATE_FILES is True:
-            if not edit_mode is True:
-                msg = _(
-                    u"<div class=\"dirtymsg\">A new file will be created at "
-                    "'<strong>%s</strong>'</div>") % (relative_path,)
-                return ('infos', msg)
-        else:
-            if not edit_mode is True:
-                msg = filepath_form + \
-                    _(u"<div class=\"dirtymsg\">File '<strong>%s</strong>' "
-                      "not found</div>") % (relative_path,)
+    if dir_only is False:
+        filepath = safe_join(settings.BASE_DIR, relative_path)
+        if not os.path.isfile(filepath):
+            # msgs
+            if CAN_CREATE_FILES is True:
+                if not edit_mode is True:
+                    msg = _(
+                        u"<div class=\"dirtymsg\">A new file will be created at "
+                        "'<strong>%s</strong>'</div>") % (relative_path,)
+                    return ('infos', msg)
             else:
-                msg = filepath_form + \
-                    _(u"<div class=\"dirtymsg\">You can not create files</div>")
-            return (False, msg)
+                if not edit_mode is True:
+                    msg = filepath_form + \
+                        _(u"<div class=\"dirtymsg\">File '<strong>%s</strong>' "
+                          "not found</div>") % (relative_path,)
+                else:
+                    msg = filepath_form + \
+                        _(u"<div class=\"dirtymsg\">You can not create files</div>")
+                return (False, msg)
     # ok
     return True, ''
 
 
-def read_file(relative_path):
-    status, msg = check_file(relative_path)
+def read_file(relative_path, dir_only=False):
+    status, msg = check_file(relative_path, False, dir_only)
     if status in [False, 'warn', 'infos']:
         return (status, msg, None)
     # read file
     filepath = safe_join(settings.BASE_DIR, relative_path)
     filex = open(filepath, "r")
     filecontent = filex.read()
-    msg = _(u"File found: data populated")
+    msg = _(u"File " + filepath + " found: data populated")
     return (True, msg, filecontent)
 
 
